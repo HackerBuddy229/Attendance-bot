@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Attendance_bot.Server
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] args) => 
+            new Program().MainAsync();
+
+        private async Task MainAsync()
         {
-            Console.WriteLine("Hello World!");
+
+
+            await Task.Delay(TimeSpan.MaxValue);
         }
     }
 }
