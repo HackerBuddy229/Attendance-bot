@@ -17,26 +17,11 @@ namespace Attendance_bot.Server
 
         public async Task MainAsync()
         {
-            using var services = ConfigureServices();
+            await using var services = ConfigureServices();
 
-            var client = services.GetRequiredService<DiscordSocketClient>();
-            var commandService = services.GetRequiredService<CommandService>();
-
-            client.Log += LogAsync;
-            commandService.Log += LogAsync;
-
-            await client.LoginAsync(TokenType.Bot, ""); //TODO: create env var for token
-            await client.StartAsync();
-
-            await services.GetRequiredService<CommandHandlingService>().InitializeAsync();
+            await services.GetRequiredService<BotStartup>().Start();
 
             await Task.Delay(Timeout.Infinite);
-        }
-
-        private Task LogAsync(LogMessage msg)
-        {
-            Console.WriteLine(msg.Message);
-            return Task.CompletedTask;
         }
 
         private ServiceProvider ConfigureServices()
@@ -45,6 +30,8 @@ namespace Attendance_bot.Server
                 .AddSingleton<DiscordSocketClient>()
                 .AddSingleton<CommandService>()
                 .AddSingleton<CommandHandlingService>()
+                .AddSingleton<BotStartup>()
+                .AddSingleton<LoggingService>()
                 .BuildServiceProvider();
         }
     }
