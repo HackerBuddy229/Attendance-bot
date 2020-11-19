@@ -7,7 +7,6 @@ using Discord.Commands;
 
 namespace Attendance_bot.Server.modules
 {
-    [Group("Check")]
     public class AttendanceModule : ModuleBase<SocketCommandContext>
     {
         public AttendanceModule()
@@ -15,7 +14,7 @@ namespace Attendance_bot.Server.modules
             
         }
 
-
+        [Command("Check")]
         public async Task CheckAttendance(string list, string channel)
         {
 
