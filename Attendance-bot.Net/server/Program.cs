@@ -32,6 +32,7 @@ namespace Attendance_bot.Server
                 .AddSingleton<CommandHandlingService>()
                 .AddSingleton<BotStartup>()
                 .AddSingleton<LoggingService>()
+                .AddSingleton<AttendanceService>()
                 .BuildServiceProvider();
         }
     }
