@@ -13,5 +13,8 @@ namespace Attendance_bot.Server.models
 
         public IList<Member> Present { get; set; }
         public IList<Member> Missing { get; set; }
+
+        public string StringRepresentation => 
+        $"{Present.Length ?? 0} Present out of {Present.Length + Missing.Length ?? 0}";
     }
 }

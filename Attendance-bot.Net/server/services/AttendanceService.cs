@@ -19,7 +19,7 @@ namespace Attendance_bot.Server.services
             _groupStorage = groupStorage;
         }
 
-        public async Task<AttendanceResult> Check(string groupName, IChannel channel)
+        public AttendanceResult Check(string groupName, IChannel channel)
         {
             var group = _groupStorage.GetGroup(groupName);
             if (group == null)
@@ -28,10 +28,17 @@ namespace Attendance_bot.Server.services
 
             var users = GetUsers(channel.GetUsersAsync());
 
-            //TODO: cóntinue here
+            var output = new AttendanceResult();
             
-            
-            throw new NotImplementedException();
+            foreach (var member in group.Members)
+            {
+                if (users.Any(u => u.Username == member.Username))
+                    output.Present.Add(member);
+                else 
+                    output.Missing.Add(member);
+            }
+
+            return output;
         }
 
         private IList<IUser> GetUsers(IAsyncEnumerable<IReadOnlyCollection<IUser>> users)
